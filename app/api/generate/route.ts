@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase/client'
+import { supabase } from '@/lib/supabase/server'
 import { GenerateImageRequest, GenerateImageResponse } from '@/lib/types'
 
 export async function POST(request: NextRequest) {
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     // TODO: Integrate with your AI image generation API (e.g., OpenAI DALL-E, Stability AI, etc.)
     // This is a placeholder that should be replaced with actual API call
-    const imageUrl = `https://via.placeholder.com/${width}x${height}?text=${encodeURIComponent(prompt)}`
+    const imageUrl = `https://placehold.co/${width}x${height}.png?text=${encodeURIComponent(prompt)}`
 
     // Save to Supabase
     const { data, error } = await supabase
