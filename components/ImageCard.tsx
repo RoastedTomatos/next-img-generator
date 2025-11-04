@@ -13,7 +13,6 @@ type Props = {
   ratio?: "square" | "4:3"
 }
 
-// Simple helper to determine external URL (use next/image) vs local (use img)
 function isExternalUrl(url: string) {
   try {
     const u = new URL(url)
@@ -54,7 +53,6 @@ const ImageCard = forwardRef<HTMLDivElement, Props>(function ImageCard(
     }
   }
 
-  // Keyboard support: Enter/Space to open when the card is focused
   const onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault()
@@ -65,7 +63,13 @@ const ImageCard = forwardRef<HTMLDivElement, Props>(function ImageCard(
   const Img = isExternalUrl(imageUrl) ? (
     <Image src={imageUrl} alt={prompt} fill className="object-cover" sizes="(max-width:768px) 100vw, 33vw" />
   ) : (
-    <img src={imageUrl} alt={prompt} className="h-full w-full object-cover" />
+    <Image
+  src={imageUrl}
+  alt={prompt}
+  width={800}
+  height={600}
+  className="h-full w-full object-cover"
+/>
   )
 
   return (
@@ -124,11 +128,13 @@ const ImageCard = forwardRef<HTMLDivElement, Props>(function ImageCard(
                     className="h-auto max-h-[80vh] w-auto max-w-full object-contain"
                   />
                 ) : (
-                  <img
-                    src={imageUrl}
-                    alt={prompt}
-                    className="h-auto max-h-[80vh] w-auto max-w-full object-contain"
-                  />
+                  <Image
+  src={imageUrl}
+  alt={prompt}
+  width={800}
+  height={600}
+  className="h-auto max-h-[80vh] w-auto max-w-full object-contain"
+/>
                 )}
               </div>
             </div>

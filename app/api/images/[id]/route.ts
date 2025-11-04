@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase/server'
+import { createServerClient } from "@/lib/supabase/server";
 
+const supabase = createServerClient();
 type Params = { params: { id: string } }
 
 export async function DELETE(request: NextRequest, { params }: Params) {

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { InferenceClient } from '@huggingface/inference'
-import { supabase } from '@/lib/supabase/server'
+import { createServerClient } from "@/lib/supabase/server";
 import { GenerateImageRequest, GenerateImageResponse } from '@/lib/types'
+
+const supabase = createServerClient();
 
 export async function POST(request: NextRequest) {
   try {

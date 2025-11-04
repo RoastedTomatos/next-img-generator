@@ -44,7 +44,6 @@ export function ImageGenerator() {
       setSuccess(true)
       setPrompt('')
       
-      // Refresh gallery after a short delay
       setTimeout(() => {
         window.location.reload()
       }, 1000)

@@ -15,7 +15,6 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
   const firstTrapRef = useRef<HTMLSpanElement>(null)
   const lastTrapRef = useRef<HTMLSpanElement>(null)
 
-  // Lock scroll when open
   useEffect(() => {
     if (!open) return
     const prev = document.body.style.overflow
@@ -25,7 +24,6 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
     }
   }, [open])
 
-  // Close on ESC
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
@@ -35,7 +33,6 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
     return () => window.removeEventListener("keydown", onKey)
   }, [open, onClose])
 
-  // Focus trap: cycle focus within the dialog while open
   const focusFirstElement = useCallback(() => {
     const root = dialogRef.current
     if (!root) return
@@ -48,7 +45,6 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
 
   useEffect(() => {
     if (open) {
-      // Delay to ensure elements are in DOM
       setTimeout(focusFirstElement, 0)
     }
   }, [open, focusFirstElement])
@@ -60,10 +56,8 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
     )
     if (focusables.length === 0) return
     if (e.currentTarget === firstTrapRef.current) {
-      // move to last focusable when shift-tabbing from first trap
       focusables[focusables.length - 1]?.focus()
     } else {
-      // move to first focusable when tabbing from last trap
       focusables[0]?.focus()
     }
   }
@@ -110,8 +104,3 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
     </div>
   )
 }
-
-// Tailwind keyframe utility classes (use via animate-*)
-// fade in
-// Add in tailwind config if desired; for now use built-in transitions via opacity/scale classes
-
