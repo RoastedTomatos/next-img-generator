@@ -86,7 +86,6 @@ const ImageCard = forwardRef<HTMLDivElement, Props>(function ImageCard(
           {Img}
         </div>
 
-        {/* Overlay */}
         <div className="pointer-events-none absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <div className="pointer-events-auto flex items-center justify-between gap-2 p-3">
             <p className="max-w-[70%] truncate text-sm text-white" title={prompt}>{prompt}</p>
@@ -113,7 +112,6 @@ const ImageCard = forwardRef<HTMLDivElement, Props>(function ImageCard(
         <div className="p-2 text-xs text-destructive">{deleteError}</div>
       )}
 
-      {/* Modal with responsive image */}
       <Modal open={open} onClose={handleClose} ariaLabel="Image preview">
         <div className="flex max-h-[80vh] min-h-[40vh] items-center justify-center">
           <div className="relative max-h-[80vh] w-full">

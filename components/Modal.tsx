@@ -69,29 +69,26 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
       className="fixed inset-0 z-50 flex items-center justify-center"
       aria-hidden={!open}
     >
-      {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/60 backdrop-blur-sm opacity-100 animate-fade-in"
         onClick={onClose}
       />
 
-      {/* Focus trap sentinels */}
       <span ref={firstTrapRef} tabIndex={0} onFocus={onTrapFocus} />
 
-      {/* Dialog */}
       <div
         role="dialog"
         aria-modal="true"
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
         ref={dialogRef}
-        className="relative z-40 mx-4 w-full max-w-4xl rounded-lg bg-background p-4 shadow-lg outline-none animate-scale-in"
+        className="relative w-fit z-40 mx-4 rounded-lg bg-background p-4 shadow-lg outline-none animate-scale-in"
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute z-50 right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-md bg-background/70 text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-ring"
+          className="absolute z-50 right-8 top-8 inline-flex h-8 w-8 items-center justify-center rounded-md bg-background/70 text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-ring"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
@@ -99,7 +96,6 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
         {children}
       </div>
 
-      {/* Focus trap sentinels */}
       <span ref={lastTrapRef} tabIndex={0} onFocus={onTrapFocus} />
     </div>
   )
