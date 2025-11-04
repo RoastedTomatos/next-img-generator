@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { GeneratedImage } from '@/lib/types'
-import Image from 'next/image'
+import ImageCard from '@/components/ImageCard'
+import { deleteImage } from '@/utils/api'
 
 export function Gallery() {
   const [images, setImages] = useState<GeneratedImage[]>([])
@@ -29,6 +30,18 @@ export function Gallery() {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Delete this image?')) return
+    const prev = images
+    setImages((s) => s.filter((img) => img.id !== id))
+    try {
+      await deleteImage(id)
+    } catch (e) {
+      setImages(prev)
+      alert(e instanceof Error ? e.message : 'Delete failed')
     }
   }
 
@@ -79,23 +92,14 @@ export function Gallery() {
         ) : (
           <div className="grid grid-cols-1 gap-4">
             {images.map((image) => (
-              <div key={image.id} className="border rounded-lg overflow-hidden">
-                <div className="aspect-video relative bg-muted">
-                  <Image
-                    src={image.image_url}
-                    alt={image.prompt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                <div className="p-4">
-                  <p className="text-sm font-medium">{image.prompt}</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {new Date(image.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-              </div>
+              <ImageCard
+                key={image.id}
+                id={image.id}
+                prompt={image.prompt}
+                imageUrl={image.image_url}
+                onDelete={handleDelete}
+                ratio="4:3"
+              />
             ))}
           </div>
         )}
