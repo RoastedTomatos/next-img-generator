@@ -17,11 +17,16 @@ export default function Home() {
 
   return (
     <main className="min-h-screen container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">AI Image Generator</h1>
-        <p className="text-muted-foreground">
-          Create stunning AI-generated images
-        </p>
+      <div className="mb-8 flex justify-between">
+        <div className=''>
+          <h1 className="text-4xl font-bold mb-2">AI Image Generator</h1>
+          <p className="text-muted-foreground">
+            Create stunning AI-generated images
+          </p>
+        </div>
+        <Button asChild className='w-[120px]'>
+          <Link href="/gallery">View Gallery</Link>
+        </Button>
       </div>
 
       <div className="flex flex-col gap-8">
@@ -32,9 +37,6 @@ export default function Home() {
         <div className="space-y-4">
           <Card className="bg-white">
             <CardContent className="flex flex-col  p-6">
-                <Button asChild className='w-[120px]'>
-                  <Link href="/gallery">View Gallery</Link>
-                </Button>
               <div className='flex justify-center'>
                 <h2 className="text-lg font-semibold mb-4">Generated Image</h2>
               </div>
