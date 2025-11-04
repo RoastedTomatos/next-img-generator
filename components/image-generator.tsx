@@ -44,7 +44,6 @@ export function ImageGenerator({ onImageGenerated }: ImageGeneratorProps) {
       setSuccess(true)
       setPrompt('')
 
-      // Викликаємо колбек, якщо передано
       if (onImageGenerated && data.image) {
         onImageGenerated(data.image)
       }

@@ -1,4 +1,3 @@
-// app/page.tsx
 'use client'
 
 import { useState } from 'react'
@@ -28,18 +27,17 @@ export default function Home() {
       <div className="flex flex-col gap-8">
         <div className="flex flex-col space-y-6">
           <ImageGenerator onImageGenerated={handleImageGenerated} />
-
-          <div className="flex justify-center">
-            <Button asChild>
-              <Link href="/gallery">View Gallery</Link>
-            </Button>
-          </div>
         </div>
 
         <div className="space-y-4">
           <Card className="bg-white">
-            <CardContent className="flex flex-col items-center justify-center p-6">
-              <h2 className="text-lg font-semibold mb-4">Generated Image</h2>
+            <CardContent className="flex flex-col  p-6">
+                <Button asChild className='w-[120px]'>
+                  <Link href="/gallery">View Gallery</Link>
+                </Button>
+              <div className='flex justify-center'>
+                <h2 className="text-lg font-semibold mb-4">Generated Image</h2>
+              </div>
               {generatedImage ? (
                 <div className="relative aspect-square rounded-lg overflow-hidden bg-muted">
                   <Image
