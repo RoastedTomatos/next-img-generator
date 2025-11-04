@@ -47,13 +47,23 @@ export function Gallery() {
 
   if (loading) {
     return (
-      <Card>
+      <Card className="bg-white">
         <CardHeader>
           <CardTitle>Gallery</CardTitle>
-          <CardDescription>Your generated images</CardDescription>
+          <CardDescription>Loading your images...</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">Loading...</p>
+          <div className="grid grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="overflow-hidden rounded-lg border">
+                <div className="aspect-[4/3] animate-pulse bg-muted" />
+                <div className="space-y-2 p-3">
+                  <div className="h-4 w-2/3 animate-pulse rounded bg-muted" />
+                  <div className="h-3 w-1/3 animate-pulse rounded bg-muted" />
+                </div>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
     )
@@ -61,7 +71,7 @@ export function Gallery() {
 
   if (error) {
     return (
-      <Card>
+      <Card className="bg-white">
         <CardHeader>
           <CardTitle>Gallery</CardTitle>
           <CardDescription>Your generated images</CardDescription>
@@ -74,7 +84,7 @@ export function Gallery() {
   }
 
   return (
-    <Card>
+    <Card className="bg-white">
       <CardHeader>
         <CardTitle>Gallery</CardTitle>
         <CardDescription>

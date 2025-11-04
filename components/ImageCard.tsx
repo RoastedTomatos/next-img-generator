@@ -97,7 +97,7 @@ const ImageCard = forwardRef<HTMLDivElement, Props>(function ImageCard(
                 {deleting ? (
                   <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                 ) : (
-                  <img src="/icons/trashbin-icon.svg" alt="" aria-hidden="true" className="h-8 w-8" />
+                  <Image src="/icons/trashbin-icon.svg" alt="" width={32} height={32} className="h-8 w-8" aria-hidden="true" />
                 )}
               </button>
             </div>

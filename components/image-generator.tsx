@@ -56,7 +56,7 @@ export function ImageGenerator() {
   }
 
   return (
-    <Card>
+    <Card className="bg-white">
       <CardHeader>
         <CardTitle>Generate Image</CardTitle>
         <CardDescription>
