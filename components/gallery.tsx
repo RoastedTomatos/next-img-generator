@@ -90,7 +90,7 @@ export function Gallery() {
             Your generated images will appear here
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             {images.map((image) => (
               <ImageCard
                 key={image.id}

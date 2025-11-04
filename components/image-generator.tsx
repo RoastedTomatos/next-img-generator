@@ -83,13 +83,15 @@ export function ImageGenerator() {
             <p className="text-sm text-green-600">Image generated successfully!</p>
           )}
         </div>
-        <Button 
-          onClick={handleGenerate} 
-          disabled={loading}
-          className="w-full"
-        >
-          {loading ? 'Generating...' : 'Generate Image'}
-        </Button>
+        <div className='flex justify-center'>
+          <Button 
+            onClick={handleGenerate} 
+            disabled={loading}
+            className="w-[340px]"
+            >
+            {loading ? 'Generating...' : 'Generate Image'}
+          </Button>
+        </div>
       </CardContent>
     </Card>
   )

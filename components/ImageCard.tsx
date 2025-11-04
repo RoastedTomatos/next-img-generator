@@ -89,24 +89,15 @@ const ImageCard = forwardRef<HTMLDivElement, Props>(function ImageCard(
             <div className="flex items-center gap-1">
               <button
                 type="button"
-                onClick={(e) => { e.stopPropagation(); handleOpen() }}
-                aria-label="Open"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-white/90 text-black hover:bg-white focus:outline-none focus:ring-2 focus:ring-ring"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4"><path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6v6M10 14l11-11M21 10v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-              </button>
-              <button
-                type="button"
                 onClick={async (e) => { e.stopPropagation(); await doDelete() }}
                 aria-label="Delete"
                 disabled={deleting}
                 className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-white/90 text-black hover:bg-white focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
               >
                 {deleting ? (
-                  // subtle spinner
                   <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                 ) : (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4"><path strokeLinecap="round" strokeLinejoin="round" d="M3 6h18M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6M10 6V4a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v2"/></svg>
+                  <img src="/icons/trashbin-icon.svg" alt="" aria-hidden="true" className="h-8 w-8" />
                 )}
               </button>
             </div>

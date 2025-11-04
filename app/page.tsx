@@ -11,7 +11,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="flex flex-col gap-8">
         <div>
           <ImageGenerator />
         </div>
