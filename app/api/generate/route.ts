@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { InferenceClient } from '@huggingface/inference'
 import { supabase } from '@/lib/supabase/server'
 import { GenerateImageRequest, GenerateImageResponse } from '@/lib/types'
 
@@ -7,18 +8,41 @@ export async function POST(request: NextRequest) {
     const body: GenerateImageRequest = await request.json()
     const { prompt, width = 1024, height = 1024 } = body
 
-    if (!prompt || prompt.trim().length === 0) {
+    if (!prompt || !prompt.trim()) {
       return NextResponse.json<GenerateImageResponse>(
         { success: false, error: 'Prompt is required' },
         { status: 400 }
       )
     }
 
-    // TODO: Integrate with your AI image generation API (e.g., OpenAI DALL-E, Stability AI, etc.)
-    // This is a placeholder that should be replaced with actual API call
-    const imageUrl = `https://placehold.co/${width}x${height}.png?text=${encodeURIComponent(prompt)}`
+    let imageUrl: string
 
-    // Save to Supabase
+    try {
+      const client = new InferenceClient(process.env.HF_TOKEN)
+
+      const imageResult = (await client.textToImage({
+        provider: 'auto',
+        model: 'black-forest-labs/FLUX.1-dev',
+        inputs: prompt,
+        parameters: { num_inference_steps: 8 },
+      })) as Blob | string
+
+      if (typeof imageResult === 'string') {
+        imageUrl = imageResult.startsWith('data:')
+          ? imageResult
+          : `data:image/png;base64,${imageResult}`
+      } else {
+        const arrayBuffer = await imageResult.arrayBuffer()
+        const base64 = Buffer.from(arrayBuffer).toString('base64')
+        imageUrl = `data:image/png;base64,${base64}`
+      }
+    } catch (err) {
+      console.error('Image generation failed, fallback used:', err)
+      imageUrl = `https://placehold.co/${width}x${height}.png?text=${encodeURIComponent(
+        'AI unavailable'
+      )}`
+    }
+
     const { data, error } = await supabase
       .from('generated_images')
       .insert({
@@ -45,12 +69,12 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Generation error:', error)
     return NextResponse.json<GenerateImageResponse>(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Internal server error' 
+      {
+        success: false,
+        error:
+          error instanceof Error ? error.message : 'Internal server error',
       },
       { status: 500 }
     )
   }
 }
-
