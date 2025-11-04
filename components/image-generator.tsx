@@ -4,9 +4,13 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { GenerateImageRequest, GenerateImageResponse } from '@/lib/types'
+import { GenerateImageRequest, GenerateImageResponse, GeneratedImage } from '@/lib/types'
 
-export function ImageGenerator() {
+type ImageGeneratorProps = {
+  onImageGenerated?: (image: GeneratedImage) => void
+}
+
+export function ImageGenerator({ onImageGenerated }: ImageGeneratorProps) {
   const [prompt, setPrompt] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -23,15 +27,11 @@ export function ImageGenerator() {
     setSuccess(false)
 
     try {
-      const requestBody: GenerateImageRequest = {
-        prompt: prompt.trim(),
-      }
+      const requestBody: GenerateImageRequest = { prompt: prompt.trim() }
 
       const response = await fetch('/api/generate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody),
       })
 
@@ -43,11 +43,11 @@ export function ImageGenerator() {
 
       setSuccess(true)
       setPrompt('')
-      
-      // Refresh gallery after a short delay
-      setTimeout(() => {
-        window.location.reload()
-      }, 1000)
+
+      if (onImageGenerated && data.image) {
+        onImageGenerated(data.image)
+      }
+
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
@@ -56,7 +56,7 @@ export function ImageGenerator() {
   }
 
   return (
-    <Card>
+    <Card className="bg-white">
       <CardHeader>
         <CardTitle>Generate Image</CardTitle>
         <CardDescription>
@@ -70,28 +70,23 @@ export function ImageGenerator() {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && !loading) {
-                handleGenerate()
-              }
+              if (e.key === 'Enter' && !loading) handleGenerate()
             }}
             disabled={loading}
           />
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
-          {success && (
-            <p className="text-sm text-green-600">Image generated successfully!</p>
-          )}
+          {error && <p className="text-sm text-destructive">{error}</p>}
+          {success && <p className="text-sm text-green-600">Image generated successfully!</p>}
         </div>
-        <Button 
-          onClick={handleGenerate} 
-          disabled={loading}
-          className="w-full"
-        >
-          {loading ? 'Generating...' : 'Generate Image'}
-        </Button>
+        <div className="flex justify-center">
+          <Button
+            onClick={handleGenerate}
+            disabled={loading}
+            className="w-[340px]"
+          >
+            {loading ? 'Generating...' : 'Generate Image'}
+          </Button>
+        </div>
       </CardContent>
     </Card>
   )
 }
-
