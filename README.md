@@ -5,7 +5,7 @@ A Next.js 14 application for generating and browsing AI-generated images, built 
 ## Features
 
 - 🎨 AI image generation with customizable prompts
-- 🖼️ Gallery view of generated images
+- 🖼️ Gallery page with generated images
 - 🗄️ Supabase integration for data persistence
 - 🎨 Modern UI with Tailwind CSS and ShadCN components
 - ⚡ Built with Next.js 14 App Router

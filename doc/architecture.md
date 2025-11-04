@@ -35,6 +35,8 @@ next-img-generator/
 │   │   │   └── route.ts
 │   │   └── images/               # Image fetching endpoint
 │   │       └── route.ts
+│   ├── gallery/
+│   │   ├── page.tsx              # Gallery page with generated images 
 │   ├── layout.tsx                # Root layout component
 │   ├── page.tsx                  # Home page
 │   ├── error.tsx                 # Error boundary
@@ -151,6 +153,7 @@ Response back to Client
 ```
 NEXT_PUBLIC_SUPABASE_URL       # Supabase project URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY  # Supabase anonymous key
+HF_TOKEN                       # HuggingFace Inference API key
 ```
 
 ## Security Considerations
