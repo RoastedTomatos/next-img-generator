@@ -63,10 +63,10 @@ export function ImageGenerator({ onImageGenerated }: ImageGeneratorProps) {
       transition={{ duration: 0.5, delay: 0.2 }}
       className="w-full max-w-2xl mx-auto"
     >
-      <div className="relative rounded-2xl border border-border/50 bg-white/80 blur-backdrop shadow-xl shadow-purple-500/10 p-8 space-y-6">
+      <div className="relative rounded-2xl border border-border/50 bg-background/80 blur-backdrop shadow-xl shadow-black/5 dark:shadow-white/5 p-8 space-y-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-purple-600" />
+            <Sparkles className="h-5 w-5 text-foreground" />
             <h3 className="text-lg font-semibold text-foreground">Describe your vision</h3>
           </div>
           <p className="text-sm text-muted-foreground">
@@ -84,7 +84,7 @@ export function ImageGenerator({ onImageGenerated }: ImageGeneratorProps) {
                 if (e.key === 'Enter' && !loading) handleGenerate()
               }}
               disabled={loading}
-              className="h-14 text-base pr-12 border-2 focus-visible:ring-2 focus-visible:ring-purple-500/50 focus-visible:border-purple-500/50"
+              className="h-14 text-base pr-12 border-2 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:border-ring/50"
             />
           </div>
 
@@ -114,7 +114,7 @@ export function ImageGenerator({ onImageGenerated }: ImageGeneratorProps) {
           <Button
             onClick={handleGenerate}
             disabled={loading || !prompt.trim()}
-            className="w-full h-12 gradient-primary hover:opacity-90 text-white shadow-lg shadow-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed text-base font-semibold"
+            className="w-full h-12 gradient-primary hover:opacity-90 text-white dark:text-black shadow-lg shadow-black/20 dark:shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed text-base font-semibold"
           >
             {loading ? (
               <span className="flex items-center gap-2">

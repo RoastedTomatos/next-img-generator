@@ -54,14 +54,14 @@ export function Gallery() {
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             className="mb-4"
           >
-            <Loader2 className="h-8 w-8 text-purple-600" />
+            <Loader2 className="h-8 w-8 text-foreground" />
           </motion.div>
           <p className="text-muted-foreground">Loading your images...</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="overflow-hidden rounded-2xl border border-border/50 bg-white">
-              <div className="aspect-square animate-pulse bg-gradient-to-br from-purple-100 to-blue-100" />
+            <div key={i} className="overflow-hidden rounded-2xl border border-border/50 bg-card">
+              <div className="aspect-square animate-pulse bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700" />
             </div>
           ))}
         </div>
@@ -101,10 +101,10 @@ export function Gallery() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center justify-center py-20 rounded-2xl border-2 border-dashed border-border bg-gradient-to-br from-purple-50/50 to-blue-50/50"
+          className="flex flex-col items-center justify-center py-20 rounded-2xl border-2 border-dashed border-border bg-gradient-to-br from-gray-50/50 to-gray-100/50 dark:from-gray-800/50 dark:to-gray-900/50"
         >
           <div className="w-20 h-20 rounded-full gradient-soft flex items-center justify-center mb-6">
-            <ImageIcon className="h-10 w-10 text-purple-600" />
+            <ImageIcon className="h-10 w-10 text-gray-600 dark:text-gray-400" />
           </div>
           <h3 className="text-xl font-semibold mb-2">Your gallery is empty</h3>
           <p className="text-muted-foreground text-center max-w-md">

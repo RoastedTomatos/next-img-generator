@@ -92,13 +92,13 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="relative z-40 w-full max-w-7xl max-h-[90vh] rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl shadow-purple-500/20 outline-none overflow-hidden"
+            className="relative z-40 w-full max-w-7xl max-h-[90vh] rounded-2xl bg-background/95 backdrop-blur-xl shadow-2xl shadow-black/20 dark:shadow-white/10 outline-none overflow-hidden"
           >
             <button
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="absolute z-50 right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 hover:bg-white text-foreground shadow-lg transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="absolute z-50 right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-background/90 hover:bg-background text-foreground shadow-lg transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-ring/50"
             >
               <X className="h-5 w-5" />
             </button>

@@ -90,7 +90,7 @@ const ImageCard = forwardRef<HTMLDivElement, Props>(function ImageCard(
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
-      className="group relative overflow-hidden rounded-2xl border border-border/50 bg-white shadow-lg shadow-purple-500/5 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300"
+      className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card shadow-lg shadow-black/5 dark:shadow-white/5 hover:shadow-xl hover:shadow-black/10 dark:hover:shadow-white/10 transition-all duration-300"
     >
       <div
         role="button"
@@ -164,7 +164,7 @@ const ImageCard = forwardRef<HTMLDivElement, Props>(function ImageCard(
         <div className="flex max-h-[90vh] min-h-[40vh] items-center justify-center p-4">
           <div className="relative max-h-[90vh] w-full max-w-7xl">
             <div className="relative mx-auto h-full w-full">
-              <div className="relative mx-auto flex max-h-[90vh] max-w-full items-center justify-center rounded-lg overflow-hidden bg-gradient-to-br from-purple-50 to-blue-50">
+              <div className="relative mx-auto flex max-h-[90vh] max-w-full items-center justify-center rounded-lg overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
                 {isExternalUrl(imageUrl) ? (
                   <Image
                     src={imageUrl}

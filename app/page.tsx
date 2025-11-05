@@ -34,7 +34,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute top-60 -left-40 w-96 h-96 rounded-full bg-blue-500 opacity-20 blur-3xl"
+            className="absolute top-60 -left-40 w-96 h-96 rounded-full bg-gray-500 dark:bg-gray-400 opacity-20 blur-3xl"
             animate={{
               scale: [1, 1.3, 1],
               x: [0, -30, 0],
@@ -61,7 +61,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight"
             >
-              <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_3s_ease-in-out_infinite]">
+              <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-gray-100 dark:via-gray-300 dark:to-gray-100 bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_3s_ease-in-out_infinite]">
                 Create AI Images Instantly
               </span>
             </motion.h1>
@@ -85,7 +85,7 @@ export default function Home() {
               <Button
                 asChild
                 size="lg"
-                className="gradient-primary hover:opacity-90 text-white shadow-lg shadow-purple-500/30 text-base px-8 h-12"
+                className="gradient-primary hover:opacity-90 text-white dark:text-black shadow-lg shadow-black/20 dark:shadow-white/10 text-base px-8 h-12"
               >
                 <Link href="#generate" className="flex items-center gap-2">
                   <Wand2 className="h-5 w-5" />
@@ -120,7 +120,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex-1 w-full lg:sticky lg:top-20"
           >
-            <div className="rounded-2xl border border-border/50 bg-white/80 blur-backdrop shadow-xl shadow-purple-500/10 p-6">
+            <div className="rounded-2xl border border-border/50 bg-background/80 blur-backdrop shadow-xl shadow-black/5 dark:shadow-white/5 p-6">
               <h2 className="text-xl font-semibold mb-4 text-center">Generated Image</h2>
               <AnimatePresence mode="wait">
                 {generatedImage ? (
@@ -130,7 +130,7 @@ export default function Home() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
-                    className="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-purple-100 to-blue-100 border-2 border-border/50"
+                    className="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 border-2 border-border/50"
                   >
                     <Image
                       src={generatedImage.image_url}
@@ -151,10 +151,10 @@ export default function Home() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="flex flex-col items-center justify-center aspect-square rounded-xl bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-dashed border-border"
+                    className="flex flex-col items-center justify-center aspect-square rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-2 border-dashed border-border"
                   >
                     <div className="w-16 h-16 rounded-full gradient-soft flex items-center justify-center mb-4">
-                      <ImageIcon className="h-8 w-8 text-purple-600" />
+                      <ImageIcon className="h-8 w-8 text-gray-600 dark:text-gray-400" />
                     </div>
                     <p className="text-sm text-muted-foreground text-center px-4">
                       Your generated image will appear here
