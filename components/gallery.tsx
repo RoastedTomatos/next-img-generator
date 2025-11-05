@@ -108,7 +108,7 @@ export function Gallery() {
           </div>
           <h3 className="text-xl font-semibold mb-2">Your gallery is empty</h3>
           <p className="text-muted-foreground text-center max-w-md">
-            Start creating amazing AI-generated images and they'll appear here
+            Start creating amazing AI-generated images and they&apos;ll appear here
           </p>
         </motion.div>
       ) : (
