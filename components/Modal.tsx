@@ -1,6 +1,8 @@
 "use client"
 
 import React, { useCallback, useEffect, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { X } from "lucide-react"
 
 type ModalProps = {
   open: boolean
@@ -62,41 +64,51 @@ export default function Modal({ open, onClose, children, ariaLabel, ariaLabelled
     }
   }
 
-  if (!open) return null
-
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
-      aria-hidden={!open}
-    >
-      <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm opacity-100 animate-fade-in"
-        onClick={onClose}
-      />
-
-      <span ref={firstTrapRef} tabIndex={0} onFocus={onTrapFocus} />
-
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledBy}
-        ref={dialogRef}
-        className="relative w-fit z-40 mx-4 rounded-lg bg-background p-4 shadow-lg outline-none animate-scale-in"
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close"
-          className="absolute z-50 right-8 top-8 inline-flex h-8 w-8 items-center justify-center rounded-md bg-background/70 text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-ring"
+    <AnimatePresence>
+      {open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          aria-hidden={!open}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-md"
+            onClick={onClose}
+          />
 
-        {children}
-      </div>
+          <span ref={firstTrapRef} tabIndex={0} onFocus={onTrapFocus} className="sr-only" />
 
-      <span ref={lastTrapRef} tabIndex={0} onFocus={onTrapFocus} />
-    </div>
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            ref={dialogRef}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="relative z-40 w-full max-w-7xl max-h-[90vh] rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl shadow-purple-500/20 outline-none overflow-hidden"
+          >
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="absolute z-50 right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 hover:bg-white text-foreground shadow-lg transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            {children}
+          </motion.div>
+
+          <span ref={lastTrapRef} tabIndex={0} onFocus={onTrapFocus} className="sr-only" />
+        </div>
+      )}
+    </AnimatePresence>
   )
 }

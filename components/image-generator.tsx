@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { GenerateImageRequest, GenerateImageResponse, GeneratedImage } from '@/lib/types'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Sparkles } from 'lucide-react'
 
 type ImageGeneratorProps = {
   onImageGenerated?: (image: GeneratedImage) => void
@@ -56,37 +57,80 @@ export function ImageGenerator({ onImageGenerated }: ImageGeneratorProps) {
   }
 
   return (
-    <Card className="bg-white">
-      <CardHeader>
-        <CardTitle>Generate Image</CardTitle>
-        <CardDescription>
-          Enter a prompt to generate an AI image
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className="w-full max-w-2xl mx-auto"
+    >
+      <div className="relative rounded-2xl border border-border/50 bg-white/80 blur-backdrop shadow-xl shadow-purple-500/10 p-8 space-y-6">
         <div className="space-y-2">
-          <Input
-            placeholder="e.g., A beautiful sunset over mountains"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !loading) handleGenerate()
-            }}
-            disabled={loading}
-          />
-          {error && <p className="text-sm text-destructive">{error}</p>}
-          {success && <p className="text-sm text-green-600">Image generated successfully!</p>}
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-purple-600" />
+            <h3 className="text-lg font-semibold text-foreground">Describe your vision</h3>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Enter a detailed prompt to generate stunning AI images
+          </p>
         </div>
-        <div className="flex justify-center">
+
+        <div className="space-y-4">
+          <div className="relative">
+            <Input
+              placeholder="e.g., A beautiful sunset over mountains with a serene lake reflecting the colors..."
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !loading) handleGenerate()
+              }}
+              disabled={loading}
+              className="h-14 text-base pr-12 border-2 focus-visible:ring-2 focus-visible:ring-purple-500/50 focus-visible:border-purple-500/50"
+            />
+          </div>
+
+          <AnimatePresence mode="wait">
+            {error && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="text-sm text-destructive bg-destructive/10 p-3 rounded-lg"
+              >
+                {error}
+              </motion.p>
+            )}
+            {success && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="text-sm text-green-600 bg-green-50 p-3 rounded-lg"
+              >
+                Image generated successfully!
+              </motion.p>
+            )}
+          </AnimatePresence>
+
           <Button
             onClick={handleGenerate}
-            disabled={loading}
-            className="w-[340px]"
+            disabled={loading || !prompt.trim()}
+            className="w-full h-12 gradient-primary hover:opacity-90 text-white shadow-lg shadow-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed text-base font-semibold"
           >
-            {loading ? 'Generating...' : 'Generate Image'}
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  className="h-4 w-4 border-2 border-white border-t-transparent rounded-full"
+                />
+                Generating...
+              </span>
+            ) : (
+              'Generate Image'
+            )}
           </Button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </motion.div>
   )
 }

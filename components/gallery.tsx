@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { GeneratedImage } from '@/lib/types'
 import ImageCard from '@/components/ImageCard'
 import { deleteImage } from '@/utils/api'
+import { motion } from 'framer-motion'
+import { ImageIcon, Loader2 } from 'lucide-react'
 
 export function Gallery() {
   const [images, setImages] = useState<GeneratedImage[]>([])
@@ -34,7 +35,6 @@ export function Gallery() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this image?')) return
     const prev = images
     setImages((s) => s.filter((img) => img.id !== id))
     try {
@@ -47,74 +47,91 @@ export function Gallery() {
 
   if (loading) {
     return (
-      <Card className="bg-white">
-        <CardHeader>
-          <CardTitle>Gallery</CardTitle>
-          <CardDescription>Loading your images...</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="overflow-hidden rounded-lg border">
-                <div className="aspect-[4/3] animate-pulse bg-muted" />
-                <div className="space-y-2 p-3">
-                  <div className="h-4 w-2/3 animate-pulse rounded bg-muted" />
-                  <div className="h-3 w-1/3 animate-pulse rounded bg-muted" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="space-y-8">
+        <div className="flex flex-col items-center justify-center py-20">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="mb-4"
+          >
+            <Loader2 className="h-8 w-8 text-purple-600" />
+          </motion.div>
+          <p className="text-muted-foreground">Loading your images...</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="overflow-hidden rounded-2xl border border-border/50 bg-white">
+              <div className="aspect-square animate-pulse bg-gradient-to-br from-purple-100 to-blue-100" />
+            </div>
+          ))}
+        </div>
+      </div>
     )
   }
 
   if (error) {
     return (
-      <Card className="bg-white">
-        <CardHeader>
-          <CardTitle>Gallery</CardTitle>
-          <CardDescription>Your generated images</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-destructive">{error}</p>
-        </CardContent>
-      </Card>
+      <div className="rounded-2xl border border-destructive/50 bg-destructive/10 p-8 text-center">
+        <p className="text-destructive font-medium">{error}</p>
+      </div>
     )
   }
 
   return (
-    <Card className="bg-white">
-      <CardHeader>
-        <CardTitle>Gallery</CardTitle>
-        <CardDescription>
-          {images.length === 0 
-            ? 'No images yet. Generate your first image!' 
-            : `${images.length} image${images.length !== 1 ? 's' : ''}`
-          }
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        {images.length === 0 ? (
-          <p className="text-muted-foreground text-center py-8">
-            Your generated images will appear here
+    <div className="space-y-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center justify-between"
+      >
+        <div>
+          <h2 className="text-2xl font-bold">Your Gallery</h2>
+          <p className="text-muted-foreground mt-1">
+            {images.length === 0 
+              ? 'No images yet. Generate your first image!' 
+              : `${images.length} image${images.length !== 1 ? 's' : ''} in your collection`
+            }
           </p>
-        ) : (
-          <div className="grid grid-cols-3 gap-4">
-            {images.map((image) => (
+        </div>
+      </motion.div>
+
+      {images.length === 0 ? (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col items-center justify-center py-20 rounded-2xl border-2 border-dashed border-border bg-gradient-to-br from-purple-50/50 to-blue-50/50"
+        >
+          <div className="w-20 h-20 rounded-full gradient-soft flex items-center justify-center mb-6">
+            <ImageIcon className="h-10 w-10 text-purple-600" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">Your gallery is empty</h3>
+          <p className="text-muted-foreground text-center max-w-md">
+            Start creating amazing AI-generated images and they'll appear here
+          </p>
+        </motion.div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {images.map((image, index) => (
+            <motion.div
+              key={image.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+            >
               <ImageCard
-                key={image.id}
                 id={image.id}
                 prompt={image.prompt}
                 imageUrl={image.image_url}
                 onDelete={handleDelete}
-                ratio="4:3"
+                ratio="square"
               />
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+            </motion.div>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
 
